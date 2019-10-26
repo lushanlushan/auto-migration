@@ -1,0 +1,46 @@
+- hosts: localhost
+  vars_files:
+    - ./vars.yaml
+
+  tasks:
+  - name: Create OVF
+    shell: | 
+        /usr/bin/ovftool \
+        --powerOffSource \
+        'vi://{{ vcenter_username }}:{{ vcenter_password }}@{{vcenter_hostname}}:443/{{Datacenter}}/vm/{{ vm_name }}' \
+        {{ localpath_image }}
+    delegate_to: localhost
+
+  - name: Upload disk file to OBS bucket
+    shell:  |
+        /usr/local/bin/obsutil sync \
+        '{{ localpath_image }}/{{ vm_name }}' \
+        'obs://{{ obs_imagebucket }}/{{ vm_name }}' \
+        --include=*.vmdk
+    delegate_to: localhost
+
+  - name: Clean the local path of image
+    shell:  |
+        /bin/rm -rf \
+        '{{ localpath_image }}'
+    delegate_to: localhost
+  
+  - name: Create System image on OTC via Terraform
+    terraform:
+      project_path: '{{ create_image_dir }}'
+      force_init: yes
+      variables: 
+        image_name: '{{ vm_name }}'
+        image_url: "{{ obs_imagebucket }}:{{ vm_name }}/{{ vm_name }}-disk1.vmdk"
+        username: {{ OTC.username }}
+        password: {{ OTC.password }}
+        domain_name: {{ OTC.domain_name }}
+        tenant_name: {{ OTC.tenant_name }}
+        endpoint: {{ OTC.endpoint }}
+      state: present
+
+  
+  # - name: Create the migrated ECS instance on OTC
+  #   terraform:
+  #     project_path: '{{ create_vm_dir }}'
+  #     state: present
