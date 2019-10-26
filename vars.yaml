@@ -1,0 +1,28 @@
+# Vcenter configuration.
+vcenter_hostname: "192.168.100.83"
+vcenter_username: "administrator@vsphere.local"
+vcenter_password: "Admin@123"
+Datacenter: "Biere"
+vm_name: "rancher"
+
+# Migration Host configuration.
+localpath_image: "/home/linux/ansible/imagebucket"
+
+# OTC configuration.
+obs_imagebucket: "imagebucket"
+
+# Terraform project path.
+create_image_dir: "../terraform/0_sys_image"
+create_vm_dir: ""
+
+# OpenTelekomCloud terraform provider configuration
+OTC:
+  username: "l00191476"
+  password: "Admin@@123"
+  domain_name: "OTC00000000001000002119"
+  tenant_name: "eu-de_automation"
+  endpoint: "https://iam.eu-de.otc.t-systems.com:443/v3"
+
+
+
+
