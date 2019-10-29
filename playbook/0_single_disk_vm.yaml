@@ -49,14 +49,7 @@
     terraform:
       project_path: '{{ create_image_dir }}'
       force_init: yes
-      variables: 
-        image_name: '{{ vm_name }}'
-        image_url: "{{ obs_imagebucket }}:{{ vm_name }}/{{ vm_name }}-disk1.vmdk"
-        username: "{{ OTC.username }}"
-        password: "{{ OTC.password }}"
-        domain_name: "{{ OTC.domain_name }}"
-        tenant_name: "{{ OTC.tenant_name }}"
-        endpoint: "{{ OTC.endpoint }}"
+      variables: "{{OTC}}"
       state: present
 
   
