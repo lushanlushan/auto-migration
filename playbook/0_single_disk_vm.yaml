@@ -32,9 +32,6 @@
         --powerOffSource \
         'vi://{{ vcenter_username }}:{{ vcenter_password }}@{{vcenter_hostname}}:443/{{Datacenter}}/vm/{{ vm_name }}' \
         {{ localpath_image }}
-    args:
-      executable: '/bin/bash'
-    delegate_to: localhost
 
   - name: Upload disk file to OBS bucket
     shell:  |
@@ -42,13 +39,11 @@
         '{{ localpath_image }}/{{ vm_name }}' \
         'obs://{{ obs_imagebucket }}/{{ vm_name }}' \
         --include=*.vmdk
-    delegate_to: localhost
 
   - name: Clean the local path of image
     shell:  |
         /bin/rm -rf \
         '{{ localpath_image }}'
-    delegate_to: localhost
   
   - name: Create System image on OTC via Terraform
     terraform:
