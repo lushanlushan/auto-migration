@@ -32,6 +32,8 @@
         --powerOffSource \
         'vi://{{ vcenter_username }}:{{ vcenter_password }}@{{vcenter_hostname}}:443/{{Datacenter}}/vm/{{ vm_name }}' \
         {{ localpath_image }}
+    args:
+      executable: '/bin/bash'
     delegate_to: localhost
 
   - name: Upload disk file to OBS bucket
