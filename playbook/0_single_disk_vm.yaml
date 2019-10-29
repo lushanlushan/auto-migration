@@ -1,6 +1,29 @@
-- hosts: localhost
-  vars_files:
-    - ../vars.yaml
+- hosts: all
+  vars:
+    # Vcenter configuration.
+    vcenter_hostname: ""
+    vcenter_username: ""
+    vcenter_password: ""
+    Datacenter: ""
+    vm_name: ""
+
+    # Migration Host configuration.
+    localpath_image: ""
+
+    # OTC configuration.
+    obs_imagebucket: ""
+
+    # Terraform project path.
+    create_image_dir: ""
+    create_vm_dir: ""
+
+    # OpenTelekomCloud terraform provider configuration
+    OTC:
+      username: ""
+      password: ""
+      domain_name: ""
+      tenant_name: ""
+      endpoint: ""
 
   tasks:
   - name: Create OVF
