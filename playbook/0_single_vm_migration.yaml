@@ -38,8 +38,8 @@
     shell: | 
         /usr/bin/ovftool \
         --powerOffSource \
-        'vi://{{ vcenter_username }}:{{ vcenter_password }}@{{vcenter_hostname}}:443/{{ vsphere_datacenter }}/{{ vm_name }}' \
-        {{ project_path.stdout }}/images
+        'vi://{{ vcenter_username }}:{{ vcenter_password }}@{{vcenter_hostname}}:443/{{ vsphere_datacenter }}/vm/{{ vm_name }}' \
+        {{ project_path.stdout_lines }}/images
     
   - name: Upload image files to OBS bucket
     shell:  |
