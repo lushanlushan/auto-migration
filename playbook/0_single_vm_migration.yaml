@@ -24,7 +24,7 @@
     fixed_ip_address: ""
     mac_address: ""
     kms_key_alias: ""
-    keypair: ""
+    key_pair: ""
     flavor_id: ""
     az: ""
 
@@ -73,7 +73,7 @@
         fixed_ip_address: "{{fixed_ip_address}}"
         mac_address: "{{mac_address}}"
         kms_key_alias: "{{kms_key_alias}}"
-        keypair: "{{keypair}}"
+        key_pair: "{{key_pair}}"
         flavor_id: "{{flavor_id}}"
         az: "{{az}}"
     

@@ -30,7 +30,7 @@ variable "mac_address" {}
 # OTC Security
 variable "kms_key_alias" {
 }
-variable "keypair" {
+variable "key_pair" {
 }
 
 variable "image_size" {
