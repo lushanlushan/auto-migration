@@ -9,7 +9,7 @@
 
     # OTC configuration.
     obs_imagebucket: ""
-
+    
     # OpenTelekomCloud terraform provider configuration
     OTC:
       username: ""
@@ -29,13 +29,6 @@
         --powerOffSource \
         'vi://{{ vcenter_username }}:{{ vcenter_password }}@{{vcenter_hostname}}:443/{{Datacenter}}/{{ vm_name }}' \
         {{ project_path }}/images
-  
-  - name: Count the data disks
-    find:
-      paths: "{{ project_path }}/images"
-      file_type: file
-      patterns: ['*.vmdk']
-    register: disk_num
     
   - name: Upload image files to OBS bucket
     shell:  |
@@ -49,29 +42,15 @@
         /bin/rm -rf \
         '{{ project_path }}/images'
   
-  - name: Copy terraform script to project path
+  - name: Clone terraform script to project path
     shell:  |
         cd '{{ project_path }}'; \
         git clone git@github.com:lushanlushan/auto-migration.git 
 
-  - name: Create system disk image on OTC via Terraform
+  - name: Single VM migration 
     terraform:
-      project_path: '{{ project_path }}/auto-migration/terraform/0_sys_image'
+      project_path: '{{ project_path }}/auto-migration/terraform/0_single_vm'
       force_init: yes
       variables: "{{OTC}}"
       state: present
 
-  # - name: Create data disk image on OTC via Terraform
-  #   terraform:
-  #     project_path: '{{ project_path }}/auto-migration/terraform/1_disk_image'
-  #     force_init: yes
-  #     variables: "{{OTC}}"
-  #     state: present
-
-
-  - name: Create the migrated ECS instance on OTC
-    terraform:
-      pproject_path: '{{ project_path }}/auto-migration/terraform/2_ecs_creation'
-      force_init: yes
-      variables: "{{OTC}}"
-      state: present
