@@ -27,9 +27,9 @@ variable "subnet_network_id" {}
 # variable "mac_address" {}
 
 
-# # OTC Security
-# variable "kms_key_alias" {
-# }
+# OTC Security
+variable "kms_key_alias" {
+}
 variable "key_pair" {
 }
 
