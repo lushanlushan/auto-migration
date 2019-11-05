@@ -7,10 +7,10 @@ variable "tenant_name" {}
 
 variable "endpoint" {}
 
-### vSphere Credentials
-variable "vsphere_user" {}
-variable "vsphere_password" {}
-variable "vsphere_server" {}
+# ### vSphere Credentials
+# variable "vsphere_user" {}
+# variable "vsphere_password" {}
+# variable "vsphere_server" {}
 
 # Info of uploaded image files
 variable "obs_imagebucket" {}
@@ -23,13 +23,13 @@ variable "vm_name" {}
 variable "security_group" {}
 variable "subnet_network_id" {}
 
-variable "fixed_ip_address" {}
-variable "mac_address" {}
+# variable "fixed_ip_address" {}
+# variable "mac_address" {}
 
 
-# OTC Security
-variable "kms_key_alias" {
-}
+# # OTC Security
+# variable "kms_key_alias" {
+# }
 variable "key_pair" {
 }
 
