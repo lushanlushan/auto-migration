@@ -33,9 +33,9 @@ data "opentelekomcloud_kms_key_v1" "kms_key" {
   key_alias = "${var.kms_key_alias}"
 }
 
-data "opentelekomcloud_vpc_subnet_v1" "subnet" {
-  name   = "${var.subnet_name}"
- }
+# data "opentelekomcloud_vpc_subnet_v1" "subnet" {
+#   name   = "${var.subnet_name}"
+#  }
 
 
 # Create system disk image
@@ -77,10 +77,10 @@ resource "opentelekomcloud_networking_port_v2" "port_1" {
     "default",
     "${data.opentelekomcloud_networking_secgroup_v2.secgroup.id}"
   ]
-  fixed_ip =  {
-    subnet_id = "${var.subnet_network_id}"
-    ip_address = "${var.fixed_ip_address}"
-  }
+  # fixed_ip =  {
+  #   subnet_id = "${var.subnet_network_id}"
+  #   ip_address = "${var.fixed_ip_address}"
+  # }
 }
 
 resource "opentelekomcloud_compute_instance_v2" "migrated_server" {
