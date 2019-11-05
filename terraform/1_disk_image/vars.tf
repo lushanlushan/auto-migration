@@ -25,7 +25,3 @@ variable "image_size" {
 variable "cmk_id_for_encryption" {
     default = ""
 }
-
-variable "automatic_configuration" {
-    default = "true"
-}

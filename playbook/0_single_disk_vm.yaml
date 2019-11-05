@@ -7,15 +7,8 @@
     Datacenter: ""
     vm_name: ""
 
-    # Migration Host configuration.
-    localpath_image: ""
-
     # OTC configuration.
     obs_imagebucket: ""
-
-    # Terraform project path.
-    create_image_dir: ""
-    create_vm_dir: ""
 
     # OpenTelekomCloud terraform provider configuration
     OTC:
@@ -26,34 +19,59 @@
       endpoint: ""
 
   tasks:
+  - name: Create project path
+    shell: /bin/mktemp -d migration.XXX
+    register: project_path
+
   - name: Create OVF
     shell: | 
         /usr/bin/ovftool \
         --powerOffSource \
-        'vi://{{ vcenter_username }}:{{ vcenter_password }}@{{vcenter_hostname}}:443/{{Datacenter}}/vm/{{ vm_name }}' \
-        {{ localpath_image }}
-
-  - name: Upload disk file to OBS bucket
+        'vi://{{ vcenter_username }}:{{ vcenter_password }}@{{vcenter_hostname}}:443/{{Datacenter}}/{{ vm_name }}' \
+        {{ project_path }}/images
+  
+  - name: Count the data disks
+    find:
+      paths: "{{ project_path }}/images"
+      file_type: file
+      patterns: ['*.vmdk']
+    register: disk_num
+    
+  - name: Upload image files to OBS bucket
     shell:  |
         /usr/local/bin/obsutil sync \
-        '{{ localpath_image }}/{{ vm_name }}' \
+        '{{ project_path }}/images/{{ vm_name }}' \
         'obs://{{ obs_imagebucket }}/{{ vm_name }}' \
         --include=*.vmdk
 
-  - name: Clean the local path of image
+  - name: Clean the local path of images
     shell:  |
         /bin/rm -rf \
-        '{{ localpath_image }}'
+        '{{ project_path }}/images'
   
-  - name: Create System image on OTC via Terraform
+  - name: Copy terraform script to project path
+    shell:  |
+        cd '{{ project_path }}'; \
+        git clone git@github.com:lushanlushan/auto-migration.git 
+
+  - name: Create system disk image on OTC via Terraform
     terraform:
-      project_path: '{{ create_image_dir }}'
+      project_path: '{{ project_path }}/auto-migration/terraform/0_sys_image'
       force_init: yes
       variables: "{{OTC}}"
       state: present
 
-  
-  # - name: Create the migrated ECS instance on OTC
+  # - name: Create data disk image on OTC via Terraform
   #   terraform:
-  #     project_path: '{{ create_vm_dir }}'
+  #     project_path: '{{ project_path }}/auto-migration/terraform/1_disk_image'
+  #     force_init: yes
+  #     variables: "{{OTC}}"
   #     state: present
+
+
+  - name: Create the migrated ECS instance on OTC
+    terraform:
+      pproject_path: '{{ project_path }}/auto-migration/terraform/2_ecs_creation'
+      force_init: yes
+      variables: "{{OTC}}"
+      state: present
