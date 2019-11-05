@@ -6,28 +6,28 @@ provider "opentelekomcloud" {
   auth_url    = "${var.endpoint}"
 }
 
-provider "vsphere" {
-  user           = "${var.vsphere_user}"
-  password       = "${var.vsphere_password}"
-  vsphere_server = "${var.vsphere_server}"
-}
+# provider "vsphere" {
+#   user           = "${var.vsphere_user}"
+#   password       = "${var.vsphere_password}"
+#   vsphere_server = "${var.vsphere_server}"
+# }
 
-# data of original vm on vsphere
-data "vsphere_datacenter" "datacenter" {
-  name = "${var.vsphere_datacenter}"
-}
+# # data of original vm on vsphere
+# data "vsphere_datacenter" "datacenter" {
+#   name = "${var.vsphere_datacenter}"
+# }
 
-data "vsphere_virtual_machine" "original_vm" {
-  name          = "${var.vm_name}}"
-  datacenter_id = "${data.vsphere_datacenter.datacenter.id}"
-}
+# data "vsphere_virtual_machine" "original_vm" {
+#   name          = "${var.vm_name}}"
+#   datacenter_id = "${data.vsphere_datacenter.datacenter.id}"
+# }
 
 
 # data of Open Telekom Cloud
 
-data "opentelekomcloud_networking_secgroup_v2" "secgroup" {
-  name = "${var.security_group}"
-}
+# data "opentelekomcloud_networking_secgroup_v2" "secgroup" {
+#   name = "${var.security_group}"
+# }
 
 data "opentelekomcloud_kms_key_v1" "kms_key" {
   key_alias = "${var.kms_key_alias}"
@@ -75,7 +75,7 @@ resource "opentelekomcloud_networking_port_v2" "port_1" {
   mac_address = "${var.mac_address}"
   security_group_ids = [
     "default",
-    "${data.opentelekomcloud_networking_secgroup_v2.secgroup.id}"
+    # "${data.opentelekomcloud_networking_secgroup_v2.secgroup.id}"
   ]
   # fixed_ip =  {
   #   subnet_id = "${var.subnet_network_id}"

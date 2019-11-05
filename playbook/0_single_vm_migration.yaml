@@ -75,6 +75,7 @@
         kms_key_alias: "{{kms_key_alias}}"
         key_pair: "{{key_pair}}"
         flavor_id: "{{flavor_id}}"
+        obs_imagebucket: "{{ obs_imagebucket }}"
         az: "{{az}}"
     
       state: present
