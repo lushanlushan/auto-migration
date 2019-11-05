@@ -24,7 +24,7 @@ variable "security_group" {}
 variable "subnet_network_id" {}
 
 # variable "fixed_ip_address" {}
-# variable "mac_address" {}
+variable "mac_address" {}
 
 
 # OTC Security
