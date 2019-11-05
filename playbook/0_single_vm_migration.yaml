@@ -4,7 +4,7 @@
     vcenter_hostname: ""
     vcenter_username: ""
     vcenter_password: ""
-    Datacenter: ""
+    vsphere_datacenter: ""
     vm_name: ""
 
     # OTC configuration.
@@ -17,6 +17,17 @@
       domain_name: ""
       tenant_name: ""
       endpoint: ""
+    
+    # OpenTelekomCloud Infra info
+    security_group: ""
+    subnet_network_id: ""
+    fixed_ip_address: ""
+    mac_address: ""
+    kms_key_alias: ""
+    keypair: ""
+    flavor_id: ""
+    az: ""
+
 
   tasks:
   - name: Create project path
@@ -27,7 +38,7 @@
     shell: | 
         /usr/bin/ovftool \
         --powerOffSource \
-        'vi://{{ vcenter_username }}:{{ vcenter_password }}@{{vcenter_hostname}}:443/{{Datacenter}}/{{ vm_name }}' \
+        'vi://{{ vcenter_username }}:{{ vcenter_password }}@{{vcenter_hostname}}:443/{{ vsphere_datacenter }}/{{ vm_name }}' \
         {{ project_path }}/images
     
   - name: Upload image files to OBS bucket
@@ -51,6 +62,16 @@
     terraform:
       project_path: '{{ project_path }}/auto-migration/terraform/0_single_vm'
       force_init: yes
-      variables: "{{OTC}}"
+      variables: {
+        "{{OTC}}",
+        "{{security_group}}",
+        "{{subnet_network_id}}",
+        "{{fixed_ip_address}}",
+        "{{mac_address}}",
+        "{{kms_key_alias}}",
+        "{{keypair}}",
+        "{{flavor_id}}",
+        "{{az}}"
+      }
       state: present
 
