@@ -31,7 +31,7 @@
 
   tasks:
   - name: Create project path
-    shell: /bin/mktemp -d migration.XXX
+    shell: /bin/mktemp -d /tmp/migration.XXX
     register: project_path
 
   - name: Create OVF
@@ -39,28 +39,28 @@
         /usr/bin/ovftool \
         --powerOffSource \
         'vi://{{ vcenter_username }}:{{ vcenter_password }}@{{vcenter_hostname}}:443/{{ vsphere_datacenter }}/vm/{{ vm_name }}' \
-        {{ project_path.stdout_lines }}/images
+        {{ project_path.stdout }}/images
     
   - name: Upload image files to OBS bucket
     shell:  |
         /usr/local/bin/obsutil sync \
-        '{{ project_path }}/images/{{ vm_name }}' \
+        '{{ project_path.stdout }}/images/{{ vm_name }}' \
         'obs://{{ obs_imagebucket }}/{{ vm_name }}' \
         --include=*.vmdk
 
   - name: Clean the local path of images
     shell:  |
         /bin/rm -rf \
-        '{{ project_path }}/images'
+        '{{ project_path.stdout }}/images'
   
   - name: Clone terraform script to project path
     shell:  |
-        cd '{{ project_path }}'; \
+        cd '{{ project_path.stdout }}'; \
         git clone git@github.com:lushanlushan/auto-migration.git 
 
   - name: Single VM migration 
     terraform:
-      project_path: '{{ project_path }}/auto-migration/terraform/0_single_vm'
+      project_path: '{{ project_path.stdout }}/auto-migration/terraform/0_single_vm'
       force_init: yes
       variables: {
         "{{OTC}}",
