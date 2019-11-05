@@ -72,6 +72,7 @@
         subnet_network_id: "{{subnet_network_id}}"
         # fixed_ip_address: "{{fixed_ip_address}}"
         # mac_address: "{{mac_address}}"
+        vm_name: "{{vm_name}}"
         kms_key_alias: "{{kms_key_alias}}"
         key_pair: "{{key_pair}}"
         flavor_id: "{{flavor_id}}"
