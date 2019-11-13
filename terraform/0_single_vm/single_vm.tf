@@ -85,7 +85,7 @@ resource "opentelekomcloud_ecs_instance_v1" "migrated_server" {
   availability_zone = "${var.az}"
   system_disk_type = "SATA"
   # system_disk_size = ""
-  auto_recovery = ""
+  auto_recovery = true
   vpc_id   = "${data.opentelekomcloud_vpc_subnet_v1.subnet.vpc_id}"
   nics {
     network_id = "${data.opentelekomcloud_vpc_subnet_v1.subnet.id}"
