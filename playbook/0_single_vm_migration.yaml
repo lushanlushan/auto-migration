@@ -65,7 +65,12 @@
         domain_name: "{{OTC.domain_name}}"
         tenant_name: "{{OTC.tenant_name}}"
         endpoint: "{{OTC.endpoint}}"
-
+        
+        vcenter_hostname: "{{vcenter_hostname}}"
+        vcenter_username: "{{vcenter_username}}"
+        vcenter_password: "{{vcenter_password}}"
+        vsphere_datacenter: "{{vsphere_datacenter}}"
+        
         subnet_name: "{{subnet_name}}"
         vm_name: "{{vm_name}}"
         kms_key_alias: "{{kms_key_alias}}"
