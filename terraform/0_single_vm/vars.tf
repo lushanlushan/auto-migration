@@ -1,40 +1,60 @@
 ### OpenTelekomCloud Credentials
-variable "username" {}
-variable "password" {}
-variable "domain_name" {}
+variable "username" {
+    
+}
+variable "password" {
 
-variable "tenant_name" {}
+}
+variable "domain_name" {
 
-variable "endpoint" {}
+}
+variable "tenant_name" {
 
-# ### vSphere Credentials
-# variable "vsphere_user" {}
-# variable "vsphere_password" {}
-# variable "vsphere_server" {}
+}
+variable "endpoint" {
+
+}
+
+### vSphere Credentials
+variable "vsphere_user" {
+
+}
+variable "vsphere_password" {
+
+}
+variable "vsphere_server" {
+
+}
 
 # Info of uploaded image files
-variable "obs_imagebucket" {}
+variable "obs_imagebucket" {
+
+}
 # Information of vm migration
-variable "vsphere_datacenter" {}
-variable "vm_name" {}
+variable "vsphere_datacenter" {
+
+}
+variable "vm_name" {
+
+}
 
 # Information of OTC infra
 # OTC Network
-variable "security_group" {}
-variable "subnet_network_id" {}
+# variable "security_group" {}
+variable "subnet_name" {
+
+}
 
 # variable "fixed_ip_address" {}
-variable "mac_address" {}
+# variable "mac_address" {}
 
 
 # OTC Security
 variable "kms_key_alias" {
+    default = ""
 }
 variable "key_pair" {
-}
-
-variable "image_size" {
-    default = 40
+    
 }
 
 # Others
@@ -42,9 +62,9 @@ variable "automatic_configuration" {
     default = "true"
 }
 
-
 variable "flavor_id" {
 }
 
 variable "az" {
+    default = "eu-de-03"
 }
