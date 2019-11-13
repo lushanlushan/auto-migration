@@ -43,6 +43,7 @@ resource "opentelekomcloud_ims_image_v2" "sys_image" {
   name   = "${var.vm_name}-sys-image"
   image_url = "${var.obs_imagebucket}:${var.vm_name}/${var.vm_name}-disk1.vmdk"
   # min_disk = "${data.vsphere_virtual_machine.original_vm.disks[0].size}"
+  min_disk = 40
   is_config = "${var.automatic_configuration}"
   cmk_id = "${data.opentelekomcloud_kms_key_v1.kms_key.key_id}"
   description = "Image created by auto migration tools."
