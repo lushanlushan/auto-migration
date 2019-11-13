@@ -83,8 +83,8 @@ resource "opentelekomcloud_ecs_instance_v1" "migrated_server" {
   flavor          = "${var.flavor_id}"
   key_name        = "${var.key_pair}"
   availability_zone = "${var.az}"
-  system_disk_type = ""
-  system_disk_size = ""
+  system_disk_type = "SATA"
+  # system_disk_size = ""
   auto_recovery = ""
   vpc_id   = "${data.opentelekomcloud_vpc_subnet_v1.subnet.vpc_id}"
   nics {
