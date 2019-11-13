@@ -65,8 +65,8 @@
         domain_name: "{{OTC.domain_name}}"
         tenant_name: "{{OTC.tenant_name}}"
         endpoint: "{{OTC.endpoint}}"
-        
-        subnet_name: "{{subnet_network_id}}"
+
+        subnet_name: "{{subnet_name}}"
         vm_name: "{{vm_name}}"
         kms_key_alias: "{{kms_key_alias}}"
         key_pair: "{{key_pair}}"
